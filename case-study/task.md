@@ -21,3 +21,4 @@
 - [x] Develop Interactive Prototype (React/Vite app)
 - [x] Conduct Simulated Usability Testing
 - [x] Final Reflection & Deliverables Packaging
+- [x] Commit and Push to GitHub Repository

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 
-const Dashboard = () => (
+const Dashboard = ({ onEnterMeetingHub }) => (
   <div className="dashboard-view">
     <header style={{ marginBottom: '2rem' }}>
       <h1>Executive Overview</h1>
@@ -15,7 +15,7 @@ const Dashboard = () => (
           <span className="badge badge-upcoming">In 2 Hours</span>
           <h2 style={{ margin: '0.5rem 0' }}>Q1 Strategy & Risk Assessment</h2>
           <p style={{ color: 'var(--text-muted)' }}>Location: Boardroom A / Zoom</p>
-          <button className="btn-primary" style={{ marginTop: '1rem' }}>Enter Meeting Hub</button>
+          <button className="btn-primary" style={{ marginTop: '1rem' }} onClick={onEnterMeetingHub}>Enter Meeting Hub</button>
         </div>
       </section>
 
@@ -78,8 +78,8 @@ const MeetingHub = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <h2>{agenda.find(i => i.id === activeItem)?.title}</h2>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button className="btn-primary">Vote Now</button>
-            <button className="btn-primary" style={{ background: 'var(--accent)' }}>Capture Note</button>
+            <button className="btn-primary" onClick={() => alert('Voting system initialized...')}>Vote Now</button>
+            <button className="btn-primary" style={{ background: 'var(--accent)' }} onClick={() => alert('Note captured for current agenda item.')}>Capture Note</button>
           </div>
         </div>
         <div style={{ flex: 1, background: 'rgba(0,0,0,0.2)', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'var(--text-muted)' }}>
@@ -98,7 +98,7 @@ const ActionCenter = () => (
   <div className="glass-card" style={{ padding: '2rem' }}>
     <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
       <h2>Action Management</h2>
-      <button className="btn-primary">+ Create Action</button>
+      <button className="btn-primary" onClick={() => alert('New Action Creation Modal would open here.')}>+ Create Action</button>
     </header>
     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
       <thead>
@@ -120,9 +120,24 @@ const ActionCenter = () => (
             <td style={{ padding: '1rem' }}>{row.owner}</td>
             <td style={{ padding: '1rem' }}>{row.due}</td>
             <td style={{ padding: '1rem' }}>
-              <span className={`badge ${row.status === 'In Progress' ? 'badge-upcoming' : row.status === 'Review' ? 'badge-done' : 'badge-pending'}`}>
-                {row.status}
-              </span>
+              <select
+                className="status-select"
+                defaultValue={row.status.toUpperCase().replace(' ', '_')}
+                style={{
+                  background: 'var(--bg-surface)',
+                  color: 'var(--text-main)',
+                  border: '1px solid var(--border)',
+                  padding: '4px 8px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '0.85rem'
+                }}
+              >
+                <option value="PENDING">PENDING</option>
+                <option value="IN_PROGRESS">IN PROGRESS</option>
+                <option value="REVIEW">REVIEW</option>
+                <option value="DONE">DONE</option>
+              </select>
             </td>
           </tr>
         ))}
@@ -170,7 +185,7 @@ const App = () => {
 
       <main className="main-content">
         <img src="/src/assets/boardroom_hero.png" className="hero-bg" alt="Boardroom" />
-        {activeTab === 'dashboard' && <Dashboard />}
+        {activeTab === 'dashboard' && <Dashboard onEnterMeetingHub={() => setActiveTab('meetings')} />}
         {activeTab === 'meetings' && <MeetingHub />}
         {activeTab === 'actions' && <ActionCenter />}
       </main>

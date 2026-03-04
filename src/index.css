@@ -112,6 +112,21 @@ h3,
   box-shadow: 0 0 15px var(--primary-glow);
 }
 
+.status-select {
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.status-select:hover {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.status-select option {
+  background: var(--bg-deep);
+  color: var(--text-main);
+}
+
 @media (max-width: 768px) {
   .dashboard-container {
     grid-template-columns: 1fr;
